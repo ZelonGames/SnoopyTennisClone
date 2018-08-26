@@ -74,7 +74,7 @@ public class BallManager : MonoBehaviour
 
         transform.position = CurrentPath[currentPathIndex];
 
-        if (prevPosition.x != transform.position.x)
+        if ((int)prevPosition.x != (int)transform.position.x)
             MovementDirection = (int)(transform.position.x - prevPosition.x) / (int)Math.Abs(transform.position.x - prevPosition.x);
     }
 
@@ -114,9 +114,9 @@ public class BallManager : MonoBehaviour
     {
         currentPaths = GameManager.PlayerPaths;
         if (!pathLevel.HasValue)
-            this.PathLevel = player.currentLevel;
+            PathLevel = player.currentLevel;
         else
-            this.PathLevel = pathLevel.Value;
+            PathLevel = pathLevel.Value;
 
         currentPathIndex = GetClosestPointInPath();
     }

@@ -37,11 +37,12 @@ public sealed class Enemy : PlayerBase
 
     #region Events
 
-    private void Start()
+    public void Initialize()
     {
         LevelDistance = 1;
         timer = GameObjectHelper.GetTimer;
         stepInTimeSkipper = new TimeSkipper(stepInTimeSkips);
+        stepBackTimeSkipper = new TimeSkipper(stepBackTimeSkips);
         position = homePosition = new Vector2(-10, 1.3f);
         AttackPosition = new Vector2(position.x + 3, position.y);
         gameObject.transform.position = homePosition;
@@ -70,9 +71,6 @@ public sealed class Enemy : PlayerBase
                 ball.SuperScore();
             }
 
-            if (stepBackTimeSkipper == null)
-                stepBackTimeSkipper = new TimeSkipper(stepBackTimeSkips);
-
             stepBackTimeSkipper.Update();
             if (stepBackTimeSkipper.Done)
             {
@@ -80,11 +78,16 @@ public sealed class Enemy : PlayerBase
                 stepInTimeSkipper.Reset();
             }
         }
+        else
+        {
+            stepInTimeSkipper.Update();
 
-        stepInTimeSkipper.Update();
-
-        if (stepInTimeSkipper.Done)
-            Move();
+            if (stepInTimeSkipper.Done)
+            {
+                Move();
+                stepBackTimeSkipper.Reset();
+            }
+        }
     }
 
     #endregion

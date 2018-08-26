@@ -24,13 +24,13 @@ public sealed class Passer : PlayerBase
 
     #region Events
 
-    void Start()
+    private void Start()
     {
         timer = GameObjectHelper.GetTimer;
         timeSkipper = new TimeSkipper(timeSkips);
     }
 
-    void Update()
+    private void Update()
     {
         if (GameManager.GameOver)
             return;

@@ -54,8 +54,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hitDistance: 1
   player: {fileID: 114091032841919852, guid: 7ed1786e45e664c4ab560f86a7371b84, type: 2}
-  stepInTimeSkips: 15
-  stepBackTimeSkips: 13
+  stepInTimeSkips: 1
+  stepBackTimeSkips: 20
 --- !u!212 &212404913338499256
 SpriteRenderer:
   m_ObjectHideFlags: 1

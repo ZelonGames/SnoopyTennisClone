@@ -6,7 +6,6 @@ using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
-
     #region Fields
 
     public static List<BallManager> Balls { get; private set; }
@@ -44,6 +43,9 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
+        player.Initialize();
+        enemy.Initialize();
+
         Balls = new List<BallManager>();
         GeneratePlayerPaths();
         GeneratePasserPaths();

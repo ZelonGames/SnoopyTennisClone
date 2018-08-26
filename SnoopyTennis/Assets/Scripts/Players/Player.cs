@@ -13,7 +13,7 @@ public sealed class Player : PlayerBase
 
     #region Events
 
-    private void Start()
+    public void Initialize()
     {
         LevelDistance = 2;
         GenerateLevelPositions();
