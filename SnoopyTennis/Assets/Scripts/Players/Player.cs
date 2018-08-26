@@ -15,6 +15,7 @@ public sealed class Player : PlayerBase
 
     private void Start()
     {
+        LevelDistance = 2;
         GenerateLevelPositions();
     }
 
@@ -28,7 +29,7 @@ public sealed class Player : PlayerBase
 
         for (int i = 0; i < 3; i++)
         {
-            LevelPositions.Add(new Vector2(transform.position.x, transform.position.y + levelDistance * i));
+            LevelPositions.Add(new Vector2(transform.position.x, transform.position.y + LevelDistance * i));
         };
     }
 

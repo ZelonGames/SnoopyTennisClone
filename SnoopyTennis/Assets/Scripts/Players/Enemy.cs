@@ -39,7 +39,7 @@ public sealed class Enemy : PlayerBase
 
     private void Start()
     {
-        levelDistance = 1;
+        LevelDistance = 1;
         timer = GameObjectHelper.GetTimer;
         stepInTimeSkipper = new TimeSkipper(stepInTimeSkips);
         position = homePosition = new Vector2(-10, 1.3f);
@@ -97,7 +97,7 @@ public sealed class Enemy : PlayerBase
 
         for (int i = 0; i < 3; i++)
         {
-            LevelPositions.Add(new Vector2(AttackPosition.x, AttackPosition.y - levelDistance + levelDistance * i));
+            LevelPositions.Add(new Vector2(AttackPosition.x, AttackPosition.y - LevelDistance + LevelDistance * i));
         };
     }
 
