@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class Player : PlayerBase
+public sealed class Player : PlayerBase
 {
     #region Properties
 

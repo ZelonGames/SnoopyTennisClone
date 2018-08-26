@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class BallManager : MonoBehaviour
 {
-    #region Instance Fields
+    #region Fields
 
     private Player player = null;
     private Enemy enemy = null;

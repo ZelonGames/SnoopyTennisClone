@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Enemy : PlayerBase
+public sealed class Enemy : PlayerBase
 {
     #region Fields
 
@@ -43,7 +43,7 @@ public class Enemy : PlayerBase
         timer = GameObjectHelper.GetTimer;
         stepInTimeSkipper = new TimeSkipper(stepInTimeSkips);
         position = homePosition = new Vector2(-10, 1.3f);
-        AttackPosition = new Vector2(position.x + 2, position.y);
+        AttackPosition = new Vector2(position.x + 3, position.y);
         gameObject.transform.position = homePosition;
 
         GenerateLevelPositions();

@@ -35,8 +35,6 @@ public class GameManager : MonoBehaviour
         set
         {
             gameOver = value;
-            if (gameOver)
-                EndGame();
         }
     }
 
@@ -51,7 +49,7 @@ public class GameManager : MonoBehaviour
         GeneratePasserPaths();
         GenerateEnemyPaths();
 
-        AddTextToCanvas("Hejsan", 27, new Vector2(100, 0));
+        //AddTextToCanvas("Hejsan", 27, new Vector2(100, 0));
     }
 
     private void Update()
@@ -62,6 +60,12 @@ public class GameManager : MonoBehaviour
             if (txtScore.gameObject.activeSelf)
                 txtScore.gameObject.SetActive(false);
         }
+    }
+
+    private void OnMouseDown()
+    {
+        if (GameOver)
+            RestartGame();
     }
 
     #endregion
@@ -96,9 +100,13 @@ public class GameManager : MonoBehaviour
         Balls.Remove(ball);
     }
 
-    private static void EndGame()
+    private void RestartGame()
     {
-
+        GameOver = false;
+        foreach(var ball in Balls)
+        {
+            DestroyBall(ball);
+        }
     }
 
     private void GeneratePlayerPaths()
