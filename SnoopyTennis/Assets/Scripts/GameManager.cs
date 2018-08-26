@@ -55,11 +55,11 @@ public class GameManager : MonoBehaviour
     private void Update()
     {
         txtScore.text = "Score: " + score;
-        if (GameOver)
+        /*if (GameOver)
         {
             if (txtScore.gameObject.activeSelf)
                 txtScore.gameObject.SetActive(false);
-        }
+        }*/
     }
 
     private void OnMouseDown()
