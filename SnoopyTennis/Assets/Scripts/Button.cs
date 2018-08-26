@@ -14,15 +14,8 @@ public class Button : MonoBehaviour
     #region Fields
 
     public ButtonType buttonType;
-    public GameObject player;
-    private Player playerComponent = null;
+    private Player player = null;
     private Timer timer = null;
-    private TimeSkipper timerSkipper = null;
-
-    [Range(0, 5)]
-    public int minTimeSkips = 0;
-    [Range(0, 5)]
-    public int maxTimeSkips = 3;
 
     private bool readToMakeAction = false;
 
@@ -33,8 +26,7 @@ public class Button : MonoBehaviour
     private void Start()
     {
         timer = GameObjectHelper.GetTimer;
-        timerSkipper = new TimeSkipper(Random.Range(minTimeSkips, maxTimeSkips));
-        playerComponent = player.GetComponent<Player>();
+        player = GameObject.Find(GameObjectHelper.Names.Player).GetComponent<Player>();
     }
 
 
@@ -51,13 +43,13 @@ public class Button : MonoBehaviour
             switch (buttonType)
             {
                 case ButtonType.Up:
-                    playerComponent.MoveUp();
+                    player.MoveUp();
                     break;
                 case ButtonType.Down:
-                    playerComponent.MoveDown();
+                    player.MoveDown();
                     break;
                 case ButtonType.Hit:
-                    BallManager closestBall = playerComponent.GetClosestBall();
+                    BallManager closestBall = player.GetClosestBall();
                     if (closestBall == null)
                         break;
 

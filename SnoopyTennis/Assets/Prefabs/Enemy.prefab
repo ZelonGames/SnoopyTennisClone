@@ -49,11 +49,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 1382917521452088}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c25e5f68a2c46f0459ce7f18308fcb85, type: 3}
+  m_Script: {fileID: 11500000, guid: 320923c6d92f5cc4d925bc97248af5b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hitDistance: 1
+  player: {fileID: 114091032841919852, guid: 7ed1786e45e664c4ab560f86a7371b84, type: 2}
   stepInTimeSkips: 15
-  stepBackTimeSkips: 2
+  stepBackTimeSkips: 13
 --- !u!212 &212404913338499256
 SpriteRenderer:
   m_ObjectHideFlags: 1

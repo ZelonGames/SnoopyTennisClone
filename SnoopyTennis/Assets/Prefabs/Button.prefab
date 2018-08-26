@@ -69,7 +69,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   buttonType: 0
-  player: {fileID: 0}
+  player: {fileID: 1852065381577496, guid: 7ed1786e45e664c4ab560f86a7371b84, type: 2}
 --- !u!212 &212676005146792048
 SpriteRenderer:
   m_ObjectHideFlags: 1

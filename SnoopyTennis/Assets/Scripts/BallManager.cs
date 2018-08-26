@@ -74,7 +74,8 @@ public class BallManager : MonoBehaviour
 
         transform.position = CurrentPath[currentPathIndex];
 
-        MovementDirection = (int)(transform.position.x - prevPosition.x) / (int)Math.Abs(transform.position.x - prevPosition.x);
+        if (prevPosition.x != transform.position.x)
+            MovementDirection = (int)(transform.position.x - prevPosition.x) / (int)Math.Abs(transform.position.x - prevPosition.x);
     }
 
     #endregion
