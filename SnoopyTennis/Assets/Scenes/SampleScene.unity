@@ -767,6 +767,21 @@ Prefab:
       propertyPath: direction
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 114008131215085624, guid: 8433e75fcb77cbf47b5ef0cb9d8f44d6,
+        type: 2}
+      propertyPath: stepAwayTimeSkips
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 114008131215085624, guid: 8433e75fcb77cbf47b5ef0cb9d8f44d6,
+        type: 2}
+      propertyPath: stayAtHomeTimeSkips
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 114008131215085624, guid: 8433e75fcb77cbf47b5ef0cb9d8f44d6,
+        type: 2}
+      propertyPath: stayAwayTimeSkips
+      value: 25
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8433e75fcb77cbf47b5ef0cb9d8f44d6, type: 2}
   m_IsPrefabAsset: 0

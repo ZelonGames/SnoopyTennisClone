@@ -19,10 +19,12 @@ public class AttackStepper : MonoBehaviour
     private Direction direction = Direction.Left;
 
     [SerializeField]
-    private int stepInTimeSkips = 1;
+    private int stayAwayTimeSkips = 1;
+    private int stayAwayTimeCounter = 0;
 
     [SerializeField]
-    private int stepOutTimeSkips = 1;
+    private int stayAtHomeTimeSkips = 1;
+    private int stayAtHomeTimeCounter = 0;
 
     [SerializeField]
     [Range(0, 10)]
@@ -34,7 +36,7 @@ public class AttackStepper : MonoBehaviour
 
     public Vector2 HomePosition { get; private set; }
 
-    private float StepDistance
+    public float StepDistance
     {
         get
         {
@@ -50,7 +52,7 @@ public class AttackStepper : MonoBehaviour
         }
     }
 
-    public bool IsAttacking { get; private set; }
+    public bool IsAtHome { get; private set; }
 
     #endregion
 
@@ -58,36 +60,63 @@ public class AttackStepper : MonoBehaviour
 
     private void Start()
     {
+        ResetStayAwayTimeCounter();
+        ResetStayAtHomeTimeCounter();
         HomePosition = gameObject.transform.position;
+        IsAtHome = true;
     }
 
     private void Update()
     {
-        if (!IsAttacking && timer.OnTick(stepInTimeSkips))
-            StepIn();
-        if (timer.OnTick(stepOutTimeSkips))
-            StepHome();
+        if (!timer.OnTick())
+            return;
+
+        if (IsAtHome)
+        {
+            stayAtHomeTimeCounter--;
+            ResetStayAwayTimeCounter();
+        }
+        else
+        {
+            stayAwayTimeCounter--;
+            ResetStayAtHomeTimeCounter();
+        }
+
+        if (stayAwayTimeCounter <= 0)
+            StepHome(); 
+        if (stayAtHomeTimeCounter <= 0)
+            StepAway();
     }
 
     #endregion
 
     #region Methods
 
-    private void StepIn()
+    private void StepAway()
     {
         Vector2 position = gameObject.transform.position;
         position.x += StepDistance;
 
         gameObject.transform.position = position;
 
-        IsAttacking = true;
+        IsAtHome = false;
     }
 
     public void StepHome()
     {
         gameObject.transform.position = HomePosition;
 
-        IsAttacking = false;
+        IsAtHome = true;
+    }
+
+    private void ResetStayAwayTimeCounter()
+    {
+        stayAwayTimeCounter = stayAwayTimeSkips;
+    }
+
+    private void ResetStayAtHomeTimeCounter()
+    {
+        stayAtHomeTimeCounter = stayAtHomeTimeSkips;
     }
 
     #endregion
