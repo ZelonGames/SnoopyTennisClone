@@ -5,35 +5,38 @@ using UnityEngine;
 
 public class Timer : MonoBehaviour
 {
-    #region Instance Fields
+    #region Fields
 
     public float timeLimit = 0;
-    public float startTime = 1000;
+    [SerializeField]
+    private int startTime = 1000;
     public bool isCountingDown = true;
     public bool isLooping = true;
-
-    private bool hasTicked = false;
 
     #endregion
 
     #region Properties
 
+    public int StartTime
+    {
+        get
+        {
+            return startTime;
+        }
+    }
+
     public float CurrentTime { get; private set; }
+
+    private int Ticks { get; set; }
+
+    private bool HasTicked { get; set; }
 
     public bool HasStopped
     {
         get
         {
-            return !isLooping && ((isCountingDown && CurrentTime <= timeLimit) || 
+            return !isLooping && ((isCountingDown && CurrentTime <= timeLimit) ||
                 (!isCountingDown && CurrentTime >= timeLimit));
-        }
-    }
-
-    public bool OnTick
-    {
-        get
-        {
-            return hasTicked && CurrentTime == startTime;
         }
     }
 
@@ -43,7 +46,7 @@ public class Timer : MonoBehaviour
 
     private void Start()
     {
-        
+
     }
 
     private void Update()
@@ -60,7 +63,7 @@ public class Timer : MonoBehaviour
             CurrentTime -= Time.deltaTime * 1000;
             if (CurrentTime <= 0)
             {
-                hasTicked = true;
+                HasTicked = true;
                 Loop();
             }
         }
@@ -69,16 +72,32 @@ public class Timer : MonoBehaviour
             CurrentTime += Time.deltaTime * 1000;
             if (CurrentTime >= timeLimit)
             {
-                hasTicked = true;
+                HasTicked = true;
                 Loop();
             }
         }
+
+        if (HasTicked)
+            Ticks++;
     }
 
     private void Loop()
     {
         if (isLooping)
             CurrentTime = startTime;
+    }
+
+    public bool OnTick(int timeskips = 0)
+    {
+        if (timeskips <= 0)
+            return CurrentTime == startTime;
+
+        return CurrentTime == startTime && Ticks % timeskips == 0;
+    }
+
+    public void SetTime(int milliseconds)
+    {
+        startTime = milliseconds;
     }
 
     #endregion

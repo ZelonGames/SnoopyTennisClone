@@ -4,9 +4,11 @@ using UnityEngine;
 
 public static class PathHelper
 {
-    public static List<Vector2> GetCurveBetweenPoints(Vector2 startPos, Vector2 targetPos, Vector2 bezier, int steps)
+    public static List<Vector2> GetCurveBetweenPoints(Vector2 startPos, Vector2 targetPos, Vector2 bezier, float distance)
     {
         var positions = new List<Vector2>();
+
+        int steps = (int)(Vector2.Distance(startPos, targetPos) / distance);
 
         for (float t = 0; t <= 1; t += 1f / steps)
         {

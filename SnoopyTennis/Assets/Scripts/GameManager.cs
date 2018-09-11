@@ -4,38 +4,27 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class GameManager : MonoBehaviour
+public sealed class GameManager : MonoBehaviour
 {
     #region Fields
 
-    public static List<BallManager> Balls { get; private set; }
-    public Player player;
-    public Passer passer;
-    public Enemy enemy;
-    public Text txtScore;
+    [SerializeField]
+    private Timer timer;
 
-    [Range(0, 50)]
-    public static int pathSteps = 20;
-    public static int score = 0;
+    [SerializeField]
+    private Text txtScore;
 
-    private static bool gameOver = false;
+    private GameObject player = null;
+    private GameObject passer = null;
+    private GameObject enemy = null;
+
+    public static bool gameOver = false;
 
     #endregion
 
     #region Properties
 
-    public static List<List<Vector2>> PlayerPaths { get; private set; }
-    public static List<List<Vector2>> PasserPaths { get; private set; }
-    public static List<List<Vector2>> EnemyPaths { get; private set; }
-
-    public static bool GameOver
-    {
-        get { return gameOver; }
-        set
-        {
-            gameOver = value;
-        }
-    }
+    public static int Score { get; private set; }
 
     #endregion
 
@@ -43,112 +32,64 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        player.Initialize();
-        enemy.Initialize();
-
-        Balls = new List<BallManager>();
-        GeneratePlayerPaths();
-        GeneratePasserPaths();
-        GenerateEnemyPaths();
-
-        //AddTextToCanvas("Hejsan", 27, new Vector2(100, 0));
+        player = GameObject.FindWithTag(GameObjectHelper.Tags.Player);
+        enemy = GameObject.FindWithTag(GameObjectHelper.Tags.Enemy);
+        passer = GameObject.FindWithTag(GameObjectHelper.Tags.Passer);
     }
 
     private void Update()
     {
-        txtScore.text = "Score: " + score;
-        /*if (GameOver)
-        {
-            if (txtScore.gameObject.activeSelf)
-                txtScore.gameObject.SetActive(false);
-        }*/
-    }
+        txtScore.text = "Score: " + Score;
 
-    private void OnMouseDown()
-    {
-        if (GameOver)
-            RestartGame();
+        if (gameOver)
+        {
+            StopGame();
+            ResetGameOnScreenTouch();
+        }
     }
 
     #endregion
 
     #region Methods
 
-    public static Text AddTextToCanvas(string textString, int fontSize, Vector2 position)
+    public static void IncreaseScore()
     {
-        GameObject canvas = GameObject.Find("Canvas");
-        Text text = canvas.AddComponent<Text>();
-        text.text = textString;
-        text.fontSize = fontSize;
-        text.transform.position = position;
-
-        Font ArialFont = (Font)Resources.GetBuiltinResource(typeof(Font), "Arial.ttf");
-        text.font = ArialFont;
-        text.material = ArialFont.material;
-
-        return text;
+        Score++;
     }
 
-    public static void CreateBall(GameObject ball, Vector2 position)
+    private void ResetGameOnScreenTouch()
     {
-        var newball = Instantiate(ball);
-        newball.transform.position = position;
-        Balls.Add(newball.GetComponent<BallManager>());
-    }
-
-    public static void DestroyBall(BallManager ball)
-    {
-        Destroy(ball.gameObject);
-        Balls.Remove(ball);
-    }
-
-    private void RestartGame()
-    {
-        GameOver = false;
-        foreach(var ball in Balls)
+        if (Input.touchCount > 0)
         {
-            DestroyBall(ball);
+            if (Input.GetMouseButtonUp(0) || Input.GetTouch(Input.touchCount - 1).phase == TouchPhase.Ended)
+            {
+                player.SetActive(true);
+                enemy.SetActive(true);
+                passer.SetActive(true);
+                Score = 0;
+                gameOver = false;
+
+                var buttons = GameObject.FindObjectsOfType<Button>();
+                foreach(var button in buttons)
+                {
+                    button.ResetAction();
+                }
+            }
         }
     }
 
-    private void GeneratePlayerPaths()
+    private void StopGame()
     {
-        PlayerPaths = new List<List<Vector2>>();
+        GameObject[] balls = GameObject.FindGameObjectsWithTag(GameObjectHelper.Tags.Ball);
 
-        for (int i = 0; i < player.LevelPositions.Count; i++)
-        {
-            Vector2 currentPlayerLevelPosition = player.LevelPositions[i];
-            Vector2 currentEnemyLevelPosition = enemy.LevelPositions[i];
+        foreach (var ball in balls)
+            Destroy(ball);
 
-            Vector2 beizer = PathHelper.GetBeizer(currentPlayerLevelPosition, currentEnemyLevelPosition);
-            PlayerPaths.Add(PathHelper.GetCurveBetweenPoints(currentPlayerLevelPosition, currentEnemyLevelPosition, beizer, pathSteps));
-        }
-    }
-
-    private void GeneratePasserPaths()
-    {
-        PasserPaths = new List<List<Vector2>>();
-
-        for (int i = 0; i < player.LevelPositions.Count; i++)
-        {
-            Vector2 currentPlayerLevelPosition = player.LevelPositions[i];
-
-            Vector2 beizer = PathHelper.GetBeizer(passer.transform.position, currentPlayerLevelPosition);
-            PasserPaths.Add(PathHelper.GetCurveBetweenPoints(passer.transform.position, currentPlayerLevelPosition, beizer, pathSteps));
-        }
-    }
-
-    private void GenerateEnemyPaths()
-    {
-        EnemyPaths = new List<List<Vector2>>();
-
-        for (int i = 0; i < player.LevelPositions.Count; i++)
-        {
-            Vector2 currentPlayerLevelPosition = player.LevelPositions[i];
-
-            Vector2 beizer = PathHelper.GetBeizer(enemy.AttackPosition, currentPlayerLevelPosition);
-            EnemyPaths.Add(PathHelper.GetCurveBetweenPoints(enemy.AttackPosition, currentPlayerLevelPosition, beizer, pathSteps));
-        }
+        player.GetComponent<PositionLevelGenerator>().ResetPosition();
+        player.SetActive(false);
+        enemy.GetComponent<AttackStepper>().StepHome();
+        enemy.SetActive(false);
+        passer.SetActive(false);
     }
 
     #endregion

@@ -20,8 +20,8 @@ GameObject:
   m_Component:
   - component: {fileID: 4787934763626838}
   - component: {fileID: 212676005146792048}
-  - component: {fileID: 58003014988055218}
   - component: {fileID: 114300708955075620}
+  - component: {fileID: 61646032179152740}
   m_Layer: 0
   m_Name: Button
   m_TagString: Untagged
@@ -42,8 +42,8 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!58 &58003014988055218
-CircleCollider2D:
+--- !u!61 &61646032179152740
+BoxCollider2D:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
@@ -55,8 +55,18 @@ CircleCollider2D:
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 1, y: 1}
+    newSize: {x: 1, y: 1}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
   serializedVersion: 2
-  m_Radius: 0.5
+  m_Size: {x: 1, y: 1}
+  m_EdgeRadius: 0
 --- !u!114 &114300708955075620
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -68,8 +78,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5daf22308bd137a4cbe114ae17a204df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  buttonType: 0
-  player: {fileID: 1852065381577496, guid: 7ed1786e45e664c4ab560f86a7371b84, type: 2}
+  pressedColor: {r: 0.45490196, g: 0, b: 0, a: 0}
+  timeSkips: 1
 --- !u!212 &212676005146792048
 SpriteRenderer:
   m_ObjectHideFlags: 1

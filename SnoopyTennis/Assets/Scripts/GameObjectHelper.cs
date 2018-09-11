@@ -6,14 +6,23 @@ using UnityEngine;
 
 public static class GameObjectHelper
 {
-    public struct Names
+    public struct Tags
     {
         public static readonly string Player = "Player";
         public static readonly string Passer = "Passer";
         public static readonly string Enemy = "Enemy";
+        public static readonly string Ball = "Ball";
     }
 
-    public static Timer GetTimer
+    public static GameManager GameManager
+    {
+        get
+        {
+            return GameObject.Find("GameManager").GetComponent<GameManager>();
+        }
+    }
+
+    public static Timer Timer
     {
         get
         {
