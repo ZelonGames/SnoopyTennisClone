@@ -21,6 +21,7 @@ GameObject:
   - component: {fileID: 4771596944682598}
   - component: {fileID: 212718665961707254}
   - component: {fileID: 114539010476238136}
+  - component: {fileID: 114983627949139764}
   - component: {fileID: 114881877922899338}
   m_Layer: 0
   m_Name: Ball
@@ -70,6 +71,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   timerName: TimeController
+--- !u!114 &114983627949139764
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1130558252240498}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ee8bcc22e84075408e4d0c88e9a7a98, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hasBeenHitByPlayer: 0
+  hasBeenHitByEnemy: 0
+  scoreValue: 1
+  speicalScoreValue: 2
 --- !u!212 &212718665961707254
 SpriteRenderer:
   m_ObjectHideFlags: 1

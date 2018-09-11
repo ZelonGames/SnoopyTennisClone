@@ -70,8 +70,7 @@ public class PathSwitcher : MonoBehaviour
                 int targetLevel = pathStepper.CurrentTargetLevel;
                 pathStepper.ChangePathGenerator(gameObject.name);
                 pathStepper.ChangePath(targetLevel, GetTargetLevel(pathStepper), true);
-                if (button != null)
-                    GameManager.IncreaseScore();
+                GameManager.AddScore(pathStepper);
             }
         }
     }

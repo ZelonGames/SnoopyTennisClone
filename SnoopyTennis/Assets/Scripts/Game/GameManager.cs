@@ -52,11 +52,31 @@ public sealed class GameManager : MonoBehaviour
 
     #region Methods
 
-    public static void IncreaseScore()
+    public static void AddScore(PathStepper pathStepper)
     {
-        Score++;
-    }
+        try
+        {
+            var scoreController = pathStepper.gameObject.GetComponent<ScoreController>();
 
+            if (pathStepper._MovementDirection == PathStepper.MovementDirection.Right)
+            {
+                if (scoreController.hasBeenHitByEnemy || !scoreController.hasBeenHitByPlayer)
+                    Score += scoreController.Score;
+
+                scoreController.hasBeenHitByPlayer = true;
+                scoreController.hasBeenHitByEnemy = false;
+            }
+            if (pathStepper._MovementDirection == PathStepper.MovementDirection.Left)
+            {
+                scoreController.hasBeenHitByPlayer = false;
+                scoreController.hasBeenHitByEnemy = true;
+            }
+        }
+        catch (System.Exception ex)
+        {
+        }
+    }
+    
     private void ResetGameOnScreenTouch()
     {
         if (Input.touchCount > 0)

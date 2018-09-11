@@ -7,7 +7,7 @@ public class Timer : MonoBehaviour
 {
     #region Fields
 
-    public float timeLimit = 0;
+    public int timeLimit = 0;
     [SerializeField]
     private int startTime = 1000;
     public bool isCountingDown = true;

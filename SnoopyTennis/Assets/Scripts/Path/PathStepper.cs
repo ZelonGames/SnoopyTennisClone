@@ -34,6 +34,8 @@ public sealed class PathStepper : MonoBehaviour
     [SerializeField]
     private int timeSkips = 1;
 
+    private float? prevXPos = null;
+
     [SerializeField]
     private bool destroyOnLastStep = true;
 
@@ -192,13 +194,18 @@ public sealed class PathStepper : MonoBehaviour
 
     public void StepToCurrentPosition()
     {
-        float prevPosition = gameObject.transform.position.x;
+        prevXPos = gameObject.transform.position.x;
         gameObject.transform.position = path.CurrentPosition;
 
-        if (gameObject.transform.position.x > prevPosition)
-            _MovementDirection = MovementDirection.Right;
-        else
-            _MovementDirection = MovementDirection.Left;
+        if (prevXPos.HasValue && prevXPos != gameObject.transform.position.x)
+        {
+            if (gameObject.transform.position.x > prevXPos.Value)
+                _MovementDirection = MovementDirection.Right;
+            else
+                _MovementDirection = MovementDirection.Left;
+        }
+
+        
     }
 
     public Vector2 GetClosestPosition(Vector2 currentPosition, Path path)
