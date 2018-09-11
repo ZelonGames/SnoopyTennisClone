@@ -62,6 +62,15 @@ public sealed class Button : MonoBehaviour
         }
     }
 
+    private void OnMouseUp()
+    {
+        readyToMakeAction = true;
+    }
+
+    #endregion
+
+    #region Methods
+
     private void DetectTouch()
     {
         if (Input.touchCount > 0)
